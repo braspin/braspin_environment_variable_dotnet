@@ -175,7 +175,7 @@ namespace braspin
                 }
             }
 
-            public static void AddEnvironmentVariable<TEnvironmentVariable>(this IServiceCollection services, [Optional] out TEnvironmentVariable env) where TEnvironmentVariable : IEnvironmentVariable
+            internal static TEnvironmentVariable LoadEnvironmentVariable<TEnvironmentVariable>() where TEnvironmentVariable : IEnvironmentVariable
             {
                 TEnvironmentVariable ev = Activator.CreateInstance(typeof(TEnvironmentVariable)) as TEnvironmentVariable ?? throw new ArgumentException("Class TEnvironmentVariable.cs inválida!");
 
@@ -183,9 +183,14 @@ namespace braspin
 
                 type.ReadEnvironmentVariables(ref ev);
 
-                services.AddSingleton(ev);
+                return ev;
+            }
 
-                env = ev;
+            public static TEnvironmentVariable AddEnvironmentVariable<TEnvironmentVariable>(this IServiceCollection services) where TEnvironmentVariable : IEnvironmentVariable
+            {
+                var env = LoadEnvironmentVariable<TEnvironmentVariable>();
+                services.AddSingleton(env);
+                return env;
             }
         }
         
