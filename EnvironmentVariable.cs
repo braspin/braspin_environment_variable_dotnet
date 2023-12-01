@@ -10,38 +10,39 @@ namespace braspin
         {
             public string Name { get; set; }
             public object? Default { get; set; }
-            public Type Type { get; set; }
+            public Type? Type { get; set; }
+            public object? Enums { get; set; }
+            public long? Min { get; set; }
+            public long? Max { get; set; }
 
-            public EnvironmentVariable(string name, Type type)
+            public EnvironmentVariable(string name)
             {
-                if (type == typeof(int) || type == typeof(short))
-                {
-                    throw new ArgumentException($"Type {type.Name} not supported, must be using long type");
-                }
-
-                if(type == typeof(float))
-                {
-                    throw new ArgumentException($"Type {type.Name} not supported, must be using double type");
-                }
-
                 Name = name;
                 Default = null;
-                Type = type;
-            }
-
-
-            public EnvironmentVariable(string name, int value)
-            {
-                Name = name;
-                Default = value;
-                Type = typeof(int);
             }
 
             public EnvironmentVariable(string name, long value)
+            { 
+                Name = name;
+                Default = value;
+                Type = typeof(long);
+            }
+
+            public EnvironmentVariable(string name, long value, long[] enums)
             {
                 Name = name;
                 Default = value;
                 Type = typeof(long);
+                Enums = enums;
+            }
+
+            public EnvironmentVariable(string name, long value, long min, long max)
+            {
+                Name = name;
+                Default = value;
+                Type = typeof(long);
+                Min = min;
+                Max = max;
             }
 
             public EnvironmentVariable(string name, string value)
@@ -49,6 +50,14 @@ namespace braspin
                 Name = name;
                 Default = value;
                 Type = typeof(string);
+            }
+
+            public EnvironmentVariable(string name, string value, string[] enums)
+            {
+                Name = name;
+                Default = value;
+                Type = typeof(string);
+                Enums = enums;
             }
 
             public EnvironmentVariable(string name, bool value)
@@ -64,6 +73,15 @@ namespace braspin
                 Default = value;
                 Type = typeof(double);
             }
+
+            public EnvironmentVariable(string name, double value, long min, long max)
+            {
+                Name = name;
+                Default = value;
+                Type = typeof(double);
+                Min = min;
+                Max = max;
+            }
         }
 
         public static class EnvironmentVariableExtensions
@@ -78,17 +96,46 @@ namespace braspin
                     {
                         string? value = System.Environment.GetEnvironmentVariable(attribute.Name);
 
-                        Type t = attribute.Type;
+                        Type? t = attribute.Type;
+
+                        if(t == null)
+                        {
+                            t = propertyInfo.PropertyType;
+                        }
 
                         if (value != null)
                         {
                             if (t == typeof(string))
                             {
+                                if(attribute.Enums != null)
+                                {
+                                    string[] enums = (string[]) attribute.Enums;
+                                    if(enums.Contains(value) == false)
+                                    {
+                                        throw new ArgumentException($"Value {value} not contains in {attribute.Name} variable");
+                                    }
+                                }
+
                                 propertyInfo.SetValue(ev, value);
                             }
                             else if (t == typeof(double) || t == typeof(double?))
                             {
-                                propertyInfo.SetValue(ev, double.Parse(value));
+                                var v = double.Parse(value);
+
+                                if (attribute.Max != null && attribute.Min != null)
+                                {
+                                    if (v < attribute.Min)
+                                    {
+                                        throw new ArgumentException($"Value {value} minor then {attribute.Min} in {attribute.Name} variable");
+                                    }
+
+                                    if (v > attribute.Max)
+                                    {
+                                        throw new ArgumentException($"Value {value} major then {attribute.Max} in {attribute.Name} variable");
+                                    }
+                                }
+
+                                propertyInfo.SetValue(ev, v);
                             }
                             else if (t == typeof(bool) || t == typeof(bool?))
                             {
@@ -96,12 +143,32 @@ namespace braspin
                             }
                             else
                             {
-                                propertyInfo.SetValue(ev, long.Parse(value));
+                                var v = long.Parse(value);
+
+                                if (attribute.Enums != null)
+                                {
+                                    long[] enums = (long[])attribute.Enums;
+                                    if (enums.Contains(v) == false)
+                                    {
+                                        throw new ArgumentException($"Value {value} not contains in {attribute.Name} variable");
+                                    }
+                                }
+
+                                if(attribute.Max != null && attribute.Min != null)
+                                {
+                                    if(v < attribute.Min)
+                                    {
+                                        throw new ArgumentException($"Value {value} minor then {attribute.Min} in {attribute.Name} variable");
+                                    }
+
+                                    if (v > attribute.Max)
+                                    {
+                                        throw new ArgumentException($"Value {value} major then {attribute.Max} in {attribute.Name} variable");
+                                    }
+                                }
+
+                                propertyInfo.SetValue(ev, v);
                             }
-                        }
-                        else
-                        {
-                            propertyInfo.SetValue(ev, attribute.Default);
                         }
                     }
                 }
