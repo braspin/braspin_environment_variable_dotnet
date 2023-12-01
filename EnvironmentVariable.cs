@@ -107,7 +107,7 @@ namespace braspin
                 }
             }
 
-            public static void AddEnviromentVariable<TEnvironmentVariable>(this IServiceCollection services) where TEnvironmentVariable : IEnvironmentVariable
+            public static void AddEnvironmentVariable<TEnvironmentVariable>(this IServiceCollection services) where TEnvironmentVariable : IEnvironmentVariable
             {
                 TEnvironmentVariable ev = Activator.CreateInstance(typeof(TEnvironmentVariable)) as TEnvironmentVariable ?? throw new ArgumentException("Class TEnvironmentVariable.cs inválida!");
 
