@@ -12,8 +12,8 @@ namespace braspin
             public object? Default { get; set; }
             public Type? Type { get; set; }
             public object? Enums { get; set; }
-            public long? Min { get; set; }
-            public long? Max { get; set; }
+            public double? Min { get; set; }
+            public double? Max { get; set; }
 
             public EnvironmentVariable(string name)
             {
@@ -74,7 +74,7 @@ namespace braspin
                 Type = typeof(double);
             }
 
-            public EnvironmentVariable(string name, double value, long min, long max)
+            public EnvironmentVariable(string name, double value, double min, double max)
             {
                 Name = name;
                 Default = value;

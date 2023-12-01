@@ -4,7 +4,7 @@ Repository Nuget: https://www.nuget.org/packages/braspin_environment_variable_do
 
 ## Install Nuget Package
 
-`` dotnet add package braspin_environment_variable_dotnet --version 0.1.6 ``
+`` dotnet add package braspin_environment_variable_dotnet --version 0.1.7 ``
 
 ### Example class AppSettings.cs inheriting IEnvironmentVariable
 
