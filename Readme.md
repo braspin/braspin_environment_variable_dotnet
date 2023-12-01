@@ -27,7 +27,7 @@ public class AppSettings : IEnvironmentVariable
 
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddEnviromentVariable<AppSettings>();
+    services.AddEnvironmentVariable<AppSettings>();
     //...
 }
 
