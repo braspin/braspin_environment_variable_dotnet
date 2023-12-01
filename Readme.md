@@ -2,7 +2,7 @@
 
 ### Declare class AppSettings.cs inheriting IEnvironmentVariable
 
-```
+```csharp
 
 public class AppSettings : IEnvironmentVariable
 {
@@ -23,7 +23,7 @@ public class AppSettings : IEnvironmentVariable
 
 ### Add Startup.cs
 
-```
+```csharp
 
 public void ConfigureServices(IServiceCollection services)
 {
@@ -35,7 +35,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ### Using in yours Controllers
 
-```
+```csharp
 //...
 
 private readonly AppSettings _config;
