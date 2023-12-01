@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace braspin
 {
@@ -174,7 +175,7 @@ namespace braspin
                 }
             }
 
-            public static void AddEnvironmentVariable<TEnvironmentVariable>(this IServiceCollection services) where TEnvironmentVariable : IEnvironmentVariable
+            public static void AddEnvironmentVariable<TEnvironmentVariable>(this IServiceCollection services, [Optional] out TEnvironmentVariable env) where TEnvironmentVariable : IEnvironmentVariable
             {
                 TEnvironmentVariable ev = Activator.CreateInstance(typeof(TEnvironmentVariable)) as TEnvironmentVariable ?? throw new ArgumentException("Class TEnvironmentVariable.cs inválida!");
 
@@ -183,6 +184,8 @@ namespace braspin
                 type.ReadEnvironmentVariables(ref ev);
 
                 services.AddSingleton(ev);
+
+                env = ev;
             }
         }
         
