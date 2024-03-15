@@ -171,6 +171,10 @@ namespace braspin
                                 propertyInfo.SetValue(ev, v);
                             }
                         }
+                        else
+                        {
+                            propertyInfo.SetValue(ev, attribute.Default);
+                        }
                     }
                 }
             }
