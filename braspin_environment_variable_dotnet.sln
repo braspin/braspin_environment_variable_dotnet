@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "braspin_environment_variable_dotnet", "braspin_environment_variable_dotnet.csproj", "{8C983DBF-A91F-D8AF-DFC4-391793267140}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C983DBF-A91F-D8AF-DFC4-391793267140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C983DBF-A91F-D8AF-DFC4-391793267140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C983DBF-A91F-D8AF-DFC4-391793267140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C983DBF-A91F-D8AF-DFC4-391793267140}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C23FFABB-E87F-4EB6-9F79-4604AD7B970C}
+	EndGlobalSection
+EndGlobal

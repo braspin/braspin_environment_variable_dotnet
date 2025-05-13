@@ -75,6 +75,13 @@ namespace braspin
                 Type = typeof(double);
             }
 
+            public EnvironmentVariable(string name, string[] values)
+            {
+                Name = name;
+                Default = values;
+                Type = typeof(string[]);
+            }
+
             public EnvironmentVariable(string name, double value, double min, double max)
             {
                 Name = name;
@@ -142,6 +149,10 @@ namespace braspin
                             {
                                 propertyInfo.SetValue(ev, bool.Parse(value));
                             }
+                            else if (t == typeof(string[]))
+                            {
+                                propertyInfo.SetValue(ev, value.Split(","));
+                            }
                             else
                             {
                                 var v = long.Parse(value);
@@ -155,9 +166,9 @@ namespace braspin
                                     }
                                 }
 
-                                if(attribute.Max != null && attribute.Min != null)
+                                if (attribute.Max != null && attribute.Min != null)
                                 {
-                                    if(v < attribute.Min)
+                                    if (v < attribute.Min)
                                     {
                                         throw new ArgumentException($"Value {value} minor then {attribute.Min} in {attribute.Name} variable");
                                     }

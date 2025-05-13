@@ -23,6 +23,9 @@ public class AppSettings : IEnvironmentVariable
 
     [EnvironmentVariable("VARIABLE_DOUBLE", 5.1)]
     public double Double { get; set; }
+
+    [EnvironmentVariable("VARIABLE_ARRAY_STRING", new string[]("Item1", "Item2"))]
+    public string[] StringArray { get; set; }
 }
 
 ```
@@ -171,6 +174,30 @@ public class AppSettings : IEnvironmentVariable
 {
     [EnvironmentVariable("VARIABLE_STRING", "Title")]
     public string String { get; set; };
+}
+
+```
+
+### String Array variable without default value
+
+```csharp
+
+public class AppSettings : IEnvironmentVariable
+{
+    [EnvironmentVariable("VARIABLE_STRING_ARRAY")]
+    public string[] StringArray { get; set; };
+}
+
+``` 
+
+### String Array variable with default value
+
+```csharp
+
+public class AppSettings : IEnvironmentVariable
+{
+    [EnvironmentVariable("VARIABLE_STRING_ARRAY", new string[]("Item1", "Item2"))]
+    public string[] StringArray { get; set; };
 }
 
 ```
