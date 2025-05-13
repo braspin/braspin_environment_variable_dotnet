@@ -11,6 +11,7 @@ namespace braspin
         {
             public string Name { get; set; }
             public object? Default { get; set; }
+            public char Separator { get; set; } = ',';
             public Type? Type { get; set; }
             public object? Enums { get; set; }
             public double? Min { get; set; }
@@ -20,6 +21,14 @@ namespace braspin
             {
                 Name = name;
                 Default = null;
+            }
+
+            public EnvironmentVariable(string name, char separator)
+            {
+                Name = name;
+                Separator = separator;
+                Default = null;
+                Type = typeof(string[]);
             }
 
             public EnvironmentVariable(string name, long value)
@@ -75,9 +84,10 @@ namespace braspin
                 Type = typeof(double);
             }
 
-            public EnvironmentVariable(string name, string[] values)
+            public EnvironmentVariable(string name, char separator, string[] values)
             {
                 Name = name;
+                Separator = separator;
                 Default = values;
                 Type = typeof(string[]);
             }
@@ -151,7 +161,7 @@ namespace braspin
                             }
                             else if (t == typeof(string[]))
                             {
-                                propertyInfo.SetValue(ev, value.Split(","));
+                                propertyInfo.SetValue(ev, value.Split(attribute.Separator));
                             }
                             else
                             {

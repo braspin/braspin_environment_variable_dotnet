@@ -6,6 +6,22 @@ Repository Nuget: https://www.nuget.org/packages/braspin_environment_variable_do
 
 `` dotnet add package braspin_environment_variable_dotnet --version 0.1.10 ``
 
+### Example class lauchSettings.json
+
+```json
+
+{
+    "environmentVariables": {
+        "VARIABLE_BOOLEAN": "true",
+        "VARIABLE_LONG": "10",
+        "VARIABLE_STRING": "Test",
+        "VARIABLE_DOUBLE": "1.15",
+        "VARIABLE_ARRAY_STRING": "Item1,Item2"
+    }
+}
+
+```
+
 ### Example class AppSettings.cs inheriting IEnvironmentVariable
 
 ```csharp
@@ -24,7 +40,7 @@ public class AppSettings : IEnvironmentVariable
     [EnvironmentVariable("VARIABLE_DOUBLE", 5.1)]
     public double Double { get; set; }
 
-    [EnvironmentVariable("VARIABLE_ARRAY_STRING", new string[]("Item1", "Item2"))]
+    [EnvironmentVariable("VARIABLE_ARRAY_STRING", ',', new string[]("Item1", "Item2"))]
     public string[] StringArray { get; set; }
 }
 
@@ -190,13 +206,25 @@ public class AppSettings : IEnvironmentVariable
 
 ``` 
 
-### String Array variable with default value
+### String Array variable comma separator
 
 ```csharp
 
 public class AppSettings : IEnvironmentVariable
 {
-    [EnvironmentVariable("VARIABLE_STRING_ARRAY", new string[]("Item1", "Item2"))]
+    [EnvironmentVariable("VARIABLE_STRING_ARRAY", ',')]
+    public string[] StringArray { get; set; };
+}
+
+``` 
+
+### String Array variable comma separator and with default value
+
+```csharp
+
+public class AppSettings : IEnvironmentVariable
+{
+    [EnvironmentVariable("VARIABLE_STRING_ARRAY", ',', new string[]("Item1", "Item2"))]
     public string[] StringArray { get; set; };
 }
 
