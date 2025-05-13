@@ -51,6 +51,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: nugetPackage
+        path: nugetPackage
     - name: Prep packages
       run: dotnet nuget add source --username fegomes --password ${{ secrets.NUGET_PACKAGE_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/fegomes/index.json"
     - name: Push package to GitHub packages 
